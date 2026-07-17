@@ -1,0 +1,46 @@
+<?php
+header('Content-Type: application/json');
+
+$input = json_decode(file_get_contents('php://input'), true);
+
+if (!$input) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid configuration']);
+    exit;
+}
+
+$result = ['steps' => []];
+
+// 1. Connexion PostgreSQL
+try {
+    $pg = $input['postgres'];
+    $dsn = "pgsql:host={$pg['host']};port={$pg['port']};dbname={$pg['db']}";
+    $pdo = new PDO($dsn, $pg['user'], $pg['pass']);
+    $result['steps'][] = ['step' => 'postgres_connection', 'status' => 'ok'];
+
+    // Création des tables
+    $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        email varchar UNIQUE NOT NULL,
+        password varchar NOT NULL,
+        roles text[] DEFAULT '{}',
+        created_at timestamp DEFAULT now()
+    )");
+    $result['steps'][] = ['step' => 'schema_creation', 'status' => 'ok'];
+
+    // Compte admin
+    $admin = $input['admin'];
+    $hash = password_hash($admin['pass'], PASSWORD_BCRYPT);
+    $stmt = $pdo->prepare("INSERT INTO users (email, password, roles) VALUES (?, ?, ?)");
+    $stmt->execute([$admin['email'], $hash, '{admin}']);
+    $result['steps'][] = ['step' => 'admin_creation', 'status' => 'ok'];
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
+    exit;
+}
+
+$result['status'] = 'success';
+$result['message'] = 'NovaCore BOS installé avec succès';
+echo json_encode($result);

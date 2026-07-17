@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧬 NovaCore BOS - Installateur</title>
+  <link rel="stylesheet" href="installer.css">
+</head>
+<body>
+  <div class="installer">
+    <header class="installer-header">
+      <h1>🧬 NovaCore BOS</h1>
+      <p>Assistant d'installation</p>
+    </header>
+
+    <div class="steps">
+      <div class="step active" data-step="1">1. Prérequis</div>
+      <div class="step" data-step="2">2. Base de données</div>
+      <div class="step" data-step="3">3. Administrateur</div>
+      <div class="step" data-step="4">4. Installation</div>
+    </div>
+
+    <div class="step-content" id="step-1">
+      <h2>Vérification des prérequis</h2>
+      <ul id="requirements-list">
+        <li>PHP >= 8.1</li>
+        <li>Extension PDO PostgreSQL</li>
+        <li>Extension MongoDB</li>
+        <li>Node.js >= 20</li>
+      </ul>
+      <button class="btn" onclick="nextStep()">Continuer</button>
+    </div>
+
+    <div class="step-content hidden" id="step-2">
+      <h2>Configuration de la base de données</h2>
+      <label>Hôte PostgreSQL <input type="text" id="pg-host" value="localhost"></label>
+      <label>Port <input type="text" id="pg-port" value="5432"></label>
+      <label>Utilisateur <input type="text" id="pg-user" value="novacore"></label>
+      <label>Mot de passe <input type="password" id="pg-pass"></label>
+      <label>Base <input type="text" id="pg-db" value="novacore"></label>
+      <button class="btn" onclick="nextStep()">Continuer</button>
+    </div>
+
+    <div class="step-content hidden" id="step-3">
+      <h2>Compte administrateur</h2>
+      <label>Email <input type="email" id="admin-email"></label>
+      <label>Mot de passe <input type="password" id="admin-pass"></label>
+      <button class="btn" onclick="nextStep()">Continuer</button>
+    </div>
+
+    <div class="step-content hidden" id="step-4">
+      <h2>Installation en cours...</h2>
+      <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+      <p id="install-status">Prêt à installer</p>
+      <button class="btn" onclick="runInstall()">Lancer l'installation</button>
+    </div>
+  </div>
+
+  <script src="installer.js"></script>
+</body>
+</html>

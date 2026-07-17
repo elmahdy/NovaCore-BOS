@@ -1,0 +1,35 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #eee;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.installer {
+  background: #0f3460;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.installer-header { text-align: center; margin-bottom: 30px; }
+.installer-header h1 { font-size: 2.5rem; }
+.installer-header p { color: #a0a0c0; }
+.steps { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.step { flex: 1; text-align: center; padding: 10px; font-size: 0.85rem; color: #666; border-bottom: 3px solid #333; }
+.step.active { color: #4ade80; border-color: #4ade80; }
+.step-content { display: block; }
+.step-content.hidden { display: none; }
+.step-content h2 { margin-bottom: 20px; }
+label { display: block; margin-bottom: 15px; }
+input { width: 100%; padding: 12px; margin-top: 5px; border: none; border-radius: 8px; background: #16213e; color: #eee; }
+ul { margin: 20px 0; padding-left: 20px; }
+li { margin-bottom: 8px; }
+.btn { background: #4ade80; color: #0f3460; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.btn:hover { background: #22c55e; }
+.progress { background: #16213e; border-radius: 8px; overflow: hidden; height: 20px; margin: 20px 0; }
+.progress-bar { background: #4ade80; height: 100%; width: 0%; transition: width 0.3s; }

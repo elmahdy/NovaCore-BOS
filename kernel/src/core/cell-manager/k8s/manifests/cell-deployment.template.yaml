@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{CELL_NAME}}"
+  namespace: novacore
+  labels:
+    app: "{{CELL_NAME}}"
+    type: cell
+spec:
+  replicas: {{REPLICAS}}
+  selector:
+    matchLabels:
+      app: "{{CELL_NAME}}"
+  template:
+    metadata:
+      labels:
+        app: "{{CELL_NAME}}"
+    spec:
+      containers:
+        - name: "{{CELL_NAME}}"
+          image: "{{IMAGE}}"
+          ports:
+            - containerPort: 3000
